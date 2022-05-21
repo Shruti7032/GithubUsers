@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">GitHubUsers</string>
+
+    <string name="follower_title">Followers</string>
+    <string name="following_title">Following</string>
+    <string name="username">username</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repositories">Repositories</string>
+    <string name="no_data_available">No Data Available</string>
+
+    <string name="user">User</string>
+    <string name="no_email">Email Not Present</string>
+    <string name="follower_placeholder">--</string>
+    <string name="following_placeholder">--</string>
+    <string name="company">Company</string>
+    <string name="company_placeholder">--</string>
+    <string name="no_company">No Company</string>
+    <string name="account_created">Account Created On</string>
+    <string name="created_on_placeholder">--</string>
+
+</resources>

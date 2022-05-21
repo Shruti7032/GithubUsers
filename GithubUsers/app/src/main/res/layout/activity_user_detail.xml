@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    tools:context=".presentation.detail.UserDetailsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="@dimen/margin_50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10dp">
+
+            <ImageView
+                android:id="@+id/iv_user"
+                android:layout_width="@dimen/user_image_width_height"
+                android:layout_height="@dimen/user_image_width_height"
+                android:background="@drawable/ic_user"
+                android:contentDescription="@string/app_name"
+                tools:targetApi="lollipop" />
+
+            <TextView
+                android:id="@+id/txt_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:text="@string/user"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_18sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:text="@string/no_email"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_14sp"
+                tools:ignore="HardcodedText" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5dp">
+
+                    <!--                         Follower-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/followers"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_15sp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:id="@+id/txt_follower"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/follower_placeholder"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_15sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="30dp"
+                        android:background="@color/colorBlack"/>
+
+                    <!--                         following-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/following"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_15sp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:id="@+id/txt_following"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/following_placeholder"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_15sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <!--                         Follower-->
+
+
+                </LinearLayout>
+
+            <!--Company-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:text="@string/company"
+                android:layout_marginTop="@dimen/margin_32dp"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/text_15sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txt_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:text="@string/company_placeholder"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/text_15sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <!--Account Created on-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_50dp"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:text="@string/account_created"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/text_15sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txt_createdOn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:text="@string/created_on_placeholder"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/text_15sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
