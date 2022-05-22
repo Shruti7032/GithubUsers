@@ -26,11 +26,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadAnimation() {
-        val logoAnimation = AnimationUtils.loadAnimation(this, R.anim.logo_animation)
         val textAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_to_top_animation)
 
         binding.apply {
-            imageView.startAnimation(logoAnimation)
             txtTitle.startAnimation(textAnimation)
         }
     }

@@ -7,12 +7,17 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
+import androidx.paging.RemoteMediator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.playground.githubusers.R
 import com.playground.githubusers.databinding.ActivityHomeBinding
 import com.playground.githubusers.domain.model.User
+import com.playground.githubusers.utils.const
+import com.playground.githubusers.utils.isConnectedNetwork
 import com.playground.githubusers.utils.state.LoaderState
 import com.playground.githubusers.utils.viewUtils.setGone
 import com.playground.githubusers.utils.viewUtils.setVisible
+import com.playground.githubusers.utils.viewUtils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -49,7 +54,9 @@ class HomeActivity : AppCompatActivity() {
     private fun getUsers() {
         setIllustration(false)
         HomeViewModel.getUserFromApi()
-
+        if (!const.mContext.isConnectedNetwork()) {
+            toast(getString(R.string.please_check_your_internet))
+        }
     }
 
     private fun initObserver() {
