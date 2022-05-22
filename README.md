@@ -3,6 +3,7 @@ This is the GitHub Users List Project. Getting list of all GitHub users with pag
 This project implements MVVM with a clean architecture approach applying some of the best practices in Android Development.
 
 ## Screenshort
+<img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_001.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_002.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_003.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_004.png" width="200" height="400">
 
 
 
