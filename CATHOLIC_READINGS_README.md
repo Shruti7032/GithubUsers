@@ -85,7 +85,7 @@ pip install requests
 
 ### Generate Readings (Nov 2025 - Dec 2026)
 
-#### Option 1: Fetch from Open-Source APIs (Recommended - New!)
+#### Option 1: Fetch from Open-Source APIs (Recommended)
 
 ```bash
 pip install requests
@@ -99,6 +99,22 @@ This fetches actual readings from MIT-licensed open-source APIs:
 - 426 days total (14 months)
 
 **Best for**: Getting actual readings data from freely available sources.
+
+### Option 1B: Fetch using Node.js (Alternative - New!)
+
+```bash
+npm install
+node fetch_readings_nodejs.js
+```
+
+This uses the **get-catholic-daily-readings** npm package (MIT license):
+- Fetches directly from USCCB website
+- Requires Node.js and browser automation (Puppeteer)
+- May fetch more complete data when USCCB publishes it
+
+**Best for**: Users comfortable with Node.js who need direct USCCB access.
+
+**Note**: Requires Chromium/Chrome for browser automation. The package scrapes USCCB's website which may have usage limitations.
 
 #### Option 2: Generate with Embedded Sample Data
 

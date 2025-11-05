@@ -1,0 +1,21 @@
+{
+  "name": "catholic-readings-generator",
+  "version": "1.0.0",
+  "description": "Generate Catholic daily readings JSON for offline Android app",
+  "main": "fetch_readings_nodejs.js",
+  "scripts": {
+    "fetch": "node fetch_readings_nodejs.js",
+    "install-deps": "npm install"
+  },
+  "keywords": [
+    "catholic",
+    "readings",
+    "liturgical",
+    "android"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "get-catholic-daily-readings": "^1.3.6"
+  }
+}
