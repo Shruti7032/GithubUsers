@@ -14,7 +14,7 @@ A complete Python-based solution that:
 
 ## Files Created
 
-### 1. `generate_sunday_mass_pdfs.py` (Main Script)
+### 1. `generate_assets.py` (Main Script)
 **Purpose:** Core functionality for generating Sunday Mass PDFs
 
 **Key Features:**
@@ -33,11 +33,11 @@ A complete Python-based solution that:
 
 **Usage:**
 ```bash
-python3 generate_sunday_mass_pdfs.py
+python3 generate_assets.py
 ```
 
 **Output:**
-- 61 PDF files in `sunday_mass_pdfs/` directory
+- 61 PDF files in `assets/` directory
 - Filenames: `Sunday_Mass_YYYY-MM-DD.pdf`
 - Each PDF ~2.2KB
 
@@ -96,7 +96,7 @@ Both are open-source with permissive licenses.
 ### 6. Updated Files
 
 **`.gitignore`:**
-- Added `sunday_mass_pdfs/` to exclude generated PDFs
+- Added `assets/` to exclude generated PDFs
 - Added `__pycache__/` and `*.pyc` for Python cache files
 
 **`README.md`:**
@@ -209,10 +209,10 @@ pip install -r requirements.txt
 ### Generate PDFs
 ```bash
 # Run the generator
-python3 generate_sunday_mass_pdfs.py
+python3 generate_assets.py
 
-# Output will be in sunday_mass_pdfs/ directory
-ls sunday_mass_pdfs/
+# Output will be in assets/ directory
+ls assets/
 ```
 
 ### Run Tests

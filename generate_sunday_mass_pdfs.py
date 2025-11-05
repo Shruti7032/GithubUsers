@@ -40,7 +40,7 @@ except ImportError:
 class SundayMassGenerator:
     """Generator for Catholic Sunday Mass PDFs"""
     
-    def __init__(self, start_date: datetime, end_date: datetime, output_dir: str = "sunday_mass_pdfs"):
+    def __init__(self, start_date: datetime, end_date: datetime, output_dir: str = "assets"):
         self.start_date = start_date
         self.end_date = end_date
         self.output_dir = output_dir

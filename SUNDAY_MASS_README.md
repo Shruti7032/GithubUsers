@@ -30,7 +30,7 @@ python3 generate_sunday_mass_pdfs.py
 The script will:
 1. Calculate all Sundays between November 1, 2025 and December 31, 2026
 2. Fetch Mass readings from the open-source Catholic Calendar API
-3. Generate PDF files in the `sunday_mass_pdfs/` directory
+3. Generate PDF files in the `assets/` directory
 
 ### Output
 
@@ -101,7 +101,7 @@ Catholic Sunday Mass PDF Generator
 ======================================================================
 
 Found 61 Sundays between 2025-11-01 and 2026-12-31
-Generating PDFs in directory: sunday_mass_pdfs
+Generating PDFs in directory: assets
 
 Processing: November 02, 2025
 Generated: Sunday_Mass_2025-11-02.pdf
@@ -110,7 +110,7 @@ Generated: Sunday_Mass_2025-11-09.pdf
 ...
 
 ✓ Successfully generated 61 PDF files!
-  Output directory: /path/to/sunday_mass_pdfs
+  Output directory: /path/to/assets
 ```
 
 ## Troubleshooting

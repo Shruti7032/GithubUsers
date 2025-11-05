@@ -18,7 +18,7 @@ This repository also includes a Python script to generate Catholic Sunday Mass P
 python3 generate_sunday_mass_pdfs.py
 ```
 
-This will generate 61 PDF files (one for each Sunday) in the `sunday_mass_pdfs/` directory using open-source liturgical calendar APIs.
+This will generate 61 PDF files (one for each Sunday) in the `assets/` directory using open-source liturgical calendar APIs.
 
 ## Screenshort
 <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_001.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_002.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_003.png" width="200" height="400"> <img src="https://github.com/Shruti7032/GithubUsers/blob/main/Screenshot/Screenshot_004.png" width="200" height="400">

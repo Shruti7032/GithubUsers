@@ -84,7 +84,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-# Generated Sunday Mass PDFs
-sunday_mass_pdfs/
+# Python cache
 __pycache__/
 *.pyc
