@@ -104,7 +104,7 @@ This fetches actual readings from MIT-licensed open-source APIs:
 
 ```bash
 pip install selenium webdriver-manager
-python3 fetch_readings_selenium.py
+python3 fetch_readings_selenium.py [optional_output_path]
 ```
 
 This uses Selenium (Python's browser automation tool) to fetch directly from USCCB:
@@ -112,8 +112,16 @@ This uses Selenium (Python's browser automation tool) to fetch directly from USC
 - Based on the get-catholic-daily-readings package logic
 - Automatically manages ChromeDriver with webdriver-manager
 - Fetches actual published readings when available
+- **Saves incrementally after each date** - JSON file is updated after every reading is fetched
+- Default output: `catholic_readings_2026.json` in the same directory as the script
 
 **Best for**: Getting real-time data directly from USCCB website.
+
+**Features**:
+- ✅ Incremental saving - won't lose progress if interrupted
+- ✅ Real-time progress updates
+- ✅ Automatic ChromeDriver management
+- ✅ Rate limiting (2 second delay between requests)
 
 **Note**: Requires Chrome/Chromium browser installed. The script respects USCCB's website with rate limiting.
 

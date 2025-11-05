@@ -217,8 +217,8 @@ class USCCBReadingsFetcher:
             ]
         }
     
-    def fetch_all_readings(self, start_date: date, end_date: date) -> List[Dict[str, Any]]:
-        """Fetch readings for all days in the date range."""
+    def fetch_all_readings(self, start_date: date, end_date: date, output_path: str = None) -> List[Dict[str, Any]]:
+        """Fetch readings for all days in the date range, saving incrementally."""
         total_days = (end_date - start_date).days + 1
         readings = []
         
@@ -229,6 +229,8 @@ class USCCBReadingsFetcher:
         print()
         print(f"Date range: {start_date} to {end_date}")
         print(f"Total days: {total_days}")
+        if output_path:
+            print(f"Saving incrementally to: {output_path}")
         print()
         
         current_date = start_date
@@ -243,6 +245,11 @@ class USCCBReadingsFetcher:
             reading = self.fetch_reading_for_date(current_date)
             readings.append(reading)
             
+            # Save incrementally after each date
+            if output_path:
+                self.save_to_json(readings, output_path)
+                print(f"  ✓ Saved to {output_path} ({len(readings)} entries)")
+            
             # Add delay between requests to be respectful
             time.sleep(2)
             
@@ -252,14 +259,15 @@ class USCCBReadingsFetcher:
         print(f"Completed! Fetched {len(readings)} daily readings.")
         return readings
     
-    def save_to_json(self, readings: List[Dict[str, Any]], output_path: str) -> None:
+    def save_to_json(self, readings: List[Dict[str, Any]], output_path: str, show_details: bool = False) -> None:
         """Save readings to JSON file."""
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(readings, f, indent=2, ensure_ascii=False)
         
-        print(f"\nJSON file saved to: {output_path}")
-        file_size = len(json.dumps(readings))
-        print(f"File size: {file_size:,} bytes ({file_size/1024:.1f} KB)")
+        if show_details:
+            print(f"\nJSON file saved to: {output_path}")
+            file_size = len(json.dumps(readings))
+            print(f"File size: {file_size:,} bytes ({file_size/1024:.1f} KB)")
 
 
 def main():
@@ -277,21 +285,25 @@ def main():
     print("=" * 70)
     print()
     
-    # Output path
-    output_path = "GithubUsers/app/src/main/assets/catholic_readings_2026.json"
+    # Output path - default to current directory
+    output_path = "catholic_readings_2026.json"
     if len(sys.argv) > 1:
         output_path = sys.argv[1]
+    
+    print(f"Output file: {output_path}")
+    print(f"Note: File will be saved incrementally after each date is fetched.")
+    print()
     
     # Date range: Nov 2025 to Dec 2026
     start_date = date(2025, 11, 1)
     end_date = date(2026, 12, 31)
     
-    # Fetch readings
+    # Fetch readings with incremental saving
     fetcher = USCCBReadingsFetcher()
-    readings = fetcher.fetch_all_readings(start_date, end_date)
+    readings = fetcher.fetch_all_readings(start_date, end_date, output_path)
     
-    # Save to file
-    fetcher.save_to_json(readings, output_path)
+    # Final save with details
+    fetcher.save_to_json(readings, output_path, show_details=True)
     
     # Summary
     actual_readings = sum(1 for r in readings 
