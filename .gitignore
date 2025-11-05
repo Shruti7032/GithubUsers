@@ -83,3 +83,8 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Generated Sunday Mass PDFs
+sunday_mass_pdfs/
+__pycache__/
+*.pyc

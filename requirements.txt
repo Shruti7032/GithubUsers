@@ -1,0 +1,3 @@
+# Requirements for Catholic Sunday Mass PDF Generator
+requests>=2.31.0
+reportlab>=4.0.0
