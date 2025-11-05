@@ -85,7 +85,22 @@ pip install requests
 
 ### Generate Readings (Nov 2025 - Dec 2026)
 
-#### Option 1: Generate with Embedded Sample Data (Recommended)
+#### Option 1: Fetch from Open-Source APIs (Recommended - New!)
+
+```bash
+pip install requests
+python3 fetch_readings_from_apis.py
+```
+
+This fetches actual readings from MIT-licensed open-source APIs:
+- **cpbjr/catholic-readings-api**: Full readings for 2025
+- **CatholicOS/liturgical-calendar-api**: Liturgical calendar and feast names
+- Fetches real Scripture texts where available
+- 426 days total (14 months)
+
+**Best for**: Getting actual readings data from freely available sources.
+
+#### Option 2: Generate with Embedded Sample Data
 
 ```bash
 python3 generate_readings_with_sample_data.py
@@ -96,9 +111,9 @@ This generates a complete JSON file covering Nov 2025 - Dec 2026 with:
 - Placeholder text for regular days with instructions to update
 - 426 days total (14 months)
 
-**Best for**: Current use when USCCB hasn't published full 2025-2026 data yet.
+**Best for**: Offline use when internet access is unavailable.
 
-#### Option 2: Fetch from USCCB (When Data is Available)
+#### Option 3: Fetch from USCCB (When Data is Available)
 
 1. **Install dependencies**:
    ```bash
