@@ -1,14 +1,17 @@
-# Catholic Daily Readings for 2026
+# Catholic Daily Readings (Nov 2025 - Dec 2026)
 
 This directory contains scripts to generate Catholic daily readings for offline use in Android applications.
 
-> **📅 Note about 2026 Data:** As of November 2025, USCCB has not yet published complete readings for 2026. The generated JSON file includes **actual readings for major feast days** (New Year, Epiphany, Christmas, etc.) and placeholders for regular days. Regenerate the file in late 2025 or early 2026 when full data becomes available.
+> **📅 Date Range:** November 1, 2025 to December 31, 2026 (14 months, 426 days)
+> 
+> **📅 Note about Data:** USCCB has not yet published complete readings for 2025-2026. The generated JSON file includes **actual readings for major feast days** (Christmas, New Year, Epiphany, etc.) and placeholders for regular days. Regenerate the file when USCCB publishes full data.
 
 ## Quick Start
 
 **For immediate use**: The JSON file is already generated at `GithubUsers/app/src/main/assets/catholic_readings_2026.json` with:
-- ✅ **Actual readings** for major feast days (New Year, Epiphany, Christmas)
-- ℹ️ Placeholders for regular days (USCCB hasn't published full 2026 data yet)
+- ✅ **Date range**: November 1, 2025 to December 31, 2026 (426 days)
+- ✅ **Actual readings** for major feast days (Christmas 2025 & 2026, New Year 2026, Epiphany 2026)
+- ℹ️ Placeholders for regular days (USCCB hasn't published full data yet)
 
 **To generate/update**:
 ```bash
@@ -26,7 +29,7 @@ python3 generate_catholic_readings.py
 
 This solution provides:
 - A Python script to fetch and generate Catholic daily readings
-- JSON output covering all 365 days of 2026 (January 1 - December 31)
+- JSON output covering 426 days (November 1, 2025 - December 31, 2026)
 - Format suitable for offline Android app usage
 - Instructions for regenerating/updating the readings
 
@@ -80,21 +83,22 @@ pip install requests
 
 ## Usage
 
-### Generate Readings for 2026
+### Generate Readings (Nov 2025 - Dec 2026)
 
-#### Option 1: Generate with Embedded Sample Data (Recommended for 2026)
+#### Option 1: Generate with Embedded Sample Data (Recommended)
 
 ```bash
 python3 generate_readings_with_sample_data.py
 ```
 
-This generates a complete 2026 JSON file with:
-- Actual Catholic readings for major feast days (New Year, Epiphany, Christmas, etc.)
+This generates a complete JSON file covering Nov 2025 - Dec 2026 with:
+- Actual Catholic readings for major feast days (Christmas, New Year, Epiphany, All Saints, etc.)
 - Placeholder text for regular days with instructions to update
+- 426 days total (14 months)
 
-**Best for**: Current use when USCCB hasn't published full 2026 data yet.
+**Best for**: Current use when USCCB hasn't published full 2025-2026 data yet.
 
-#### Option 2: Fetch from USCCB (When 2026 Data is Available)
+#### Option 2: Fetch from USCCB (When Data is Available)
 
 1. **Install dependencies**:
    ```bash
@@ -106,7 +110,7 @@ This generates a complete 2026 JSON file with:
    python3 generate_catholic_readings.py
    ```
 
-**Best for**: Late 2025 or 2026 when USCCB publishes complete readings data.
+**Best for**: When USCCB publishes complete 2025-2026 readings data.
 
 **Output**: Both scripts create `catholic_readings_2026.json` in `GithubUsers/app/src/main/assets/`
 
@@ -238,7 +242,7 @@ python3 validate_readings.py
 
 This will verify:
 - JSON structure is correct
-- All 365 days are present (no gaps, no duplicates)
+- All 426 days are present (Nov 1, 2025 - Dec 31, 2026, no gaps, no duplicates)
 - Special liturgical dates are properly titled
 - Readings have content
 

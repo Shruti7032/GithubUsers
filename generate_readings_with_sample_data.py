@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """
-Catholic Daily Readings Generator for 2026 with Sample Data
+Catholic Daily Readings Generator (Nov 2025 - Dec 2026) with Sample Data
 
-This script generates a complete JSON file for 2026 with sample Catholic readings.
-It includes actual readings for major liturgical dates and placeholder text for others.
+This script generates a complete JSON file covering November 2025 through December 2026
+with sample Catholic readings. It includes actual readings for major liturgical dates
+and placeholder text for others.
 
-NOTE: Full 2026 data is not yet available from USCCB. This generates a working
+NOTE: Full 2025-2026 data is not yet available from USCCB. This generates a working
 JSON file with:
 - Actual readings for major feast days (embedded in script)
-- Placeholders for regular days (to be updated when USCCB publishes 2026 data)
+- Placeholders for regular days (to be updated when USCCB publishes complete data)
 
 Usage:
-    python3 generate_readings_with_sample_data.py [year] [output_path]
+    python3 generate_readings_with_sample_data.py [output_path]
 """
 
 import json
@@ -164,17 +165,18 @@ def generate_reading_for_date(target_date: date) -> Dict[str, Any]:
     }
 
 
-def generate_all_readings(year: int) -> List[Dict[str, Any]]:
-    """Generate readings for all days in the specified year."""
+def generate_all_readings(start_year: int, start_month: int, end_year: int) -> List[Dict[str, Any]]:
+    """Generate readings for a date range from start_month/start_year to end of end_year."""
     readings = []
-    start_date = date(year, 1, 1)
-    end_date = date(year, 12, 31)
+    start_date = date(start_year, start_month, 1)
+    end_date = date(end_year, 12, 31)
     
+    total_days = (end_date - start_date).days + 1
     current_date = start_date
     day_count = 0
     
-    print(f"Generating Catholic readings for {year}...")
-    print(f"From {start_date} to {end_date}")
+    print(f"Generating Catholic readings from {start_date} to {end_date}...")
+    print(f"Total days to process: {total_days}")
     print()
     print("NOTE: This generator includes actual readings for major feast days")
     print("      and placeholders for regular days (USCCB has not published")
@@ -185,7 +187,7 @@ def generate_all_readings(year: int) -> List[Dict[str, Any]]:
         day_count += 1
         
         if day_count % 30 == 0 or day_count == 1:
-            print(f"Processing day {day_count}/365: {current_date}")
+            print(f"Processing day {day_count}/{total_days}: {current_date}")
         
         reading = generate_reading_for_date(current_date)
         readings.append(reading)
@@ -209,7 +211,8 @@ def save_to_json(readings: List[Dict[str, Any]], output_path: str) -> None:
 def main():
     """Main entry point."""
     print("=" * 70)
-    print("Catholic Daily Readings Generator for 2026")
+    print("Catholic Daily Readings Generator")
+    print("Nov 2025 - Dec 2026")
     print("=" * 70)
     print()
     print("COPYRIGHT AND USAGE NOTES:")
@@ -227,21 +230,14 @@ def main():
     print("=" * 70)
     print()
     
-    # Parse command line arguments
-    year = 2026
+    # Default: Nov 1, 2025 to Dec 31, 2026
     output_path = "GithubUsers/app/src/main/assets/catholic_readings_2026.json"
     
     if len(sys.argv) > 1:
-        try:
-            year = int(sys.argv[1])
-        except ValueError:
-            print(f"Warning: Invalid year '{sys.argv[1]}', using default 2026")
+        output_path = sys.argv[1]
     
-    if len(sys.argv) > 2:
-        output_path = sys.argv[2]
-    
-    # Generate readings
-    readings = generate_all_readings(year)
+    # Generate readings from Nov 2025 to Dec 2026
+    readings = generate_all_readings(start_year=2025, start_month=11, end_year=2026)
     
     # Save to file
     save_to_json(readings, output_path)
@@ -250,12 +246,14 @@ def main():
     print("SUCCESS! The readings JSON file has been generated.")
     print()
     print("✓ Includes actual readings for major feast days:")
-    print("  - January 1: Solemnity of Mary, Mother of God")
-    print("  - January 6: Epiphany of the Lord")
-    print("  - December 25: Nativity of the Lord (Christmas)")
+    print("  - January 1, 2026: Solemnity of Mary, Mother of God")
+    print("  - January 6, 2026: Epiphany of the Lord")
+    print("  - December 25, 2025 & 2026: Nativity of the Lord (Christmas)")
     print()
     print("ℹ Other dates have placeholder text with instructions to update")
-    print("  when USCCB publishes complete 2026 readings.")
+    print("  when USCCB publishes complete data.")
+    print()
+    print("Date range: November 1, 2025 to December 31, 2026 (14 months)")
     print()
     print("Next steps:")
     print("1. Use the generated JSON file in your Android app now")
