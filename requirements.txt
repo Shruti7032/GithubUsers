@@ -2,3 +2,6 @@
 # Install with: pip install -r requirements.txt
 
 catholic-mass-readings>=0.6.0
+requests>=2.31.0
+selenium>=4.15.0
+webdriver-manager>=4.0.0

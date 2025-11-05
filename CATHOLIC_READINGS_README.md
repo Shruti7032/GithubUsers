@@ -100,7 +100,24 @@ This fetches actual readings from MIT-licensed open-source APIs:
 
 **Best for**: Getting actual readings data from freely available sources.
 
-### Option 1B: Fetch using Node.js (Alternative - New!)
+### Option 1B: Fetch using Python + Selenium (Recommended for USCCB Direct Access - New!)
+
+```bash
+pip install selenium webdriver-manager
+python3 fetch_readings_selenium.py
+```
+
+This uses Selenium (Python's browser automation tool) to fetch directly from USCCB:
+- **Scrapes USCCB website directly** for the most current data
+- Based on the get-catholic-daily-readings package logic
+- Automatically manages ChromeDriver with webdriver-manager
+- Fetches actual published readings when available
+
+**Best for**: Getting real-time data directly from USCCB website.
+
+**Note**: Requires Chrome/Chromium browser installed. The script respects USCCB's website with rate limiting.
+
+### Option 1C: Fetch using Node.js (Alternative)
 
 ```bash
 npm install
