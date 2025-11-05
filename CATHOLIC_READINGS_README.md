@@ -1,13 +1,21 @@
 # Catholic Daily Readings for 2026
 
-This directory contains a script to generate Catholic daily readings for offline use in Android applications.
+This directory contains scripts to generate Catholic daily readings for offline use in Android applications.
+
+> **📅 Note about 2026 Data:** As of November 2025, USCCB has not yet published complete readings for 2026. The generated JSON file includes **actual readings for major feast days** (New Year, Epiphany, Christmas, etc.) and placeholders for regular days. Regenerate the file in late 2025 or early 2026 when full data becomes available.
 
 ## Quick Start
 
-**For immediate use**: The JSON file is already generated at `GithubUsers/app/src/main/assets/catholic_readings_2026.json` with 365 days of placeholder readings.
+**For immediate use**: The JSON file is already generated at `GithubUsers/app/src/main/assets/catholic_readings_2026.json` with:
+- ✅ **Actual readings** for major feast days (New Year, Epiphany, Christmas)
+- ℹ️ Placeholders for regular days (USCCB hasn't published full 2026 data yet)
 
-**To fetch real content** (requires internet):
+**To generate/update**:
 ```bash
+# Generate with embedded sample data (works offline)
+python3 generate_readings_with_sample_data.py
+
+# Or try to fetch from USCCB (requires internet, may not have 2026 data yet)
 pip install -r requirements.txt
 python3 generate_catholic_readings.py
 ```
@@ -74,19 +82,35 @@ pip install requests
 
 ### Generate Readings for 2026
 
+#### Option 1: Generate with Embedded Sample Data (Recommended for 2026)
+
+```bash
+python3 generate_readings_with_sample_data.py
+```
+
+This generates a complete 2026 JSON file with:
+- Actual Catholic readings for major feast days (New Year, Epiphany, Christmas, etc.)
+- Placeholder text for regular days with instructions to update
+
+**Best for**: Current use when USCCB hasn't published full 2026 data yet.
+
+#### Option 2: Fetch from USCCB (When 2026 Data is Available)
+
 1. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Run the generator script**:
+2. **Run the USCCB generator**:
    ```bash
    python3 generate_catholic_readings.py
    ```
 
-3. **Output**: The script will create `catholic_readings_2026.json` in the `GithubUsers/app/src/main/assets/` directory.
+**Best for**: Late 2025 or 2026 when USCCB publishes complete readings data.
 
-**Note**: The repository already includes a generated JSON file. You only need to run the script if you want to fetch fresh content from the API or regenerate the file.
+**Output**: Both scripts create `catholic_readings_2026.json` in `GithubUsers/app/src/main/assets/`
+
+**Note**: The repository already includes a generated JSON file with actual readings for major feast days.
 
 ### Generate Readings for a Different Year
 
