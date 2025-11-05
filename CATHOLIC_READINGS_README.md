@@ -206,13 +206,25 @@ This is acceptable for offline Android apps.
 
 ### Validation
 
-To validate the generated JSON:
+**Recommended**: Use the validation script to check the JSON file:
 
 ```bash
-python3 -m json.tool catholic_readings_2026.json > /dev/null && echo "Valid JSON"
+python3 validate_readings.py
 ```
 
-To check the number of days:
+This will verify:
+- JSON structure is correct
+- All 365 days are present (no gaps, no duplicates)
+- Special liturgical dates are properly titled
+- Readings have content
+
+**Alternative**: Quick JSON validation:
+
+```bash
+python3 -m json.tool GithubUsers/app/src/main/assets/catholic_readings_2026.json > /dev/null && echo "✓ Valid JSON"
+```
+
+**Check entry count**:
 
 ```bash
 python3 -c "import json; data=json.load(open('GithubUsers/app/src/main/assets/catholic_readings_2026.json')); print(f'Total days: {len(data)}')"
