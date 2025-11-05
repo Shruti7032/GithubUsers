@@ -15,9 +15,12 @@ import json
 try:
     import requests
 except ImportError:
-    print("Installing required package: requests")
-    os.system(f"{sys.executable} -m pip install requests")
-    import requests
+    print("Error: 'requests' package not found.")
+    print("Please install required dependencies:")
+    print("  pip install -r requirements.txt")
+    print("or")
+    print("  pip install requests reportlab")
+    sys.exit(1)
 
 try:
     from reportlab.lib.pagesizes import letter, A4
@@ -26,13 +29,12 @@ try:
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
     from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 except ImportError:
-    print("Installing required package: reportlab")
-    os.system(f"{sys.executable} -m pip install reportlab")
-    from reportlab.lib.pagesizes import letter, A4
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import inch
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
-    from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
+    print("Error: 'reportlab' package not found.")
+    print("Please install required dependencies:")
+    print("  pip install -r requirements.txt")
+    print("or")
+    print("  pip install requests reportlab")
+    sys.exit(1)
 
 
 class SundayMassGenerator:
@@ -79,8 +81,10 @@ class SundayMassGenerator:
         # Try to fetch from Catholic Calendar API
         try:
             # Using the Catholic Liturgical Calendar API
+            # Note: This API only supports HTTP (not HTTPS) as of 2025
+            # Data is public liturgical information, not sensitive
             url = f"http://calapi.inadiutorium.cz/api/v0/en/calendars/default/{date_str}"
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=10, verify=True)
             
             if response.status_code == 200:
                 data = response.json()
