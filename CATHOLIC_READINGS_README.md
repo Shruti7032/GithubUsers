@@ -2,6 +2,18 @@
 
 This directory contains a script to generate Catholic daily readings for offline use in Android applications.
 
+## Quick Start
+
+**For immediate use**: The JSON file is already generated at `GithubUsers/app/src/main/assets/catholic_readings_2026.json` with 365 days of placeholder readings.
+
+**To fetch real content** (requires internet):
+```bash
+pip install -r requirements.txt
+python3 generate_catholic_readings.py
+```
+
+**To use in Android**: See the [Using in Android App](#using-in-android-app) section below.
+
 ## Overview
 
 This solution provides:
@@ -50,6 +62,11 @@ This solution provides:
 
 ### Python Dependencies
 ```bash
+pip install -r requirements.txt
+```
+
+Or manually:
+```bash
 pip install requests
 ```
 
@@ -59,7 +76,7 @@ pip install requests
 
 1. **Install dependencies**:
    ```bash
-   pip install requests
+   pip install -r requirements.txt
    ```
 
 2. **Run the generator script**:
@@ -68,6 +85,8 @@ pip install requests
    ```
 
 3. **Output**: The script will create `catholic_readings_2026.json` in the `GithubUsers/app/src/main/assets/` directory.
+
+**Note**: The repository already includes a generated JSON file. You only need to run the script if you want to fetch fresh content from the API or regenerate the file.
 
 ### Generate Readings for a Different Year
 
@@ -201,21 +220,18 @@ python3 -c "import json; data=json.load(open('GithubUsers/app/src/main/assets/ca
 
 ## Using in Android App
 
-### Loading the JSON in Android
+### Step 1: Add Gson Dependency
+
+Add to your `build.gradle` (app level):
+```gradle
+dependencies {
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+```
+
+### Step 2: Create Data Classes
 
 ```kotlin
-// In your Android app, load the JSON from assets:
-fun loadCatholicReadings(context: Context): List<DailyReading> {
-    val json = context.assets.open("catholic_readings_2026.json")
-        .bufferedReader()
-        .use { it.readText() }
-    
-    val gson = Gson()
-    val type = object : TypeToken<List<DailyReading>>() {}.type
-    return gson.fromJson(json, type)
-}
-
-// Data class:
 data class DailyReading(
     val date: String,
     val title: String,
@@ -229,15 +245,111 @@ data class Reading(
 )
 ```
 
-### Querying by Date
+### Step 3: Load the JSON from Assets
 
 ```kotlin
-fun getReadingForDate(readings: List<DailyReading>, date: String): DailyReading? {
-    return readings.find { it.date == date }
-}
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.IOException
 
-// Usage:
-val todayReading = getReadingForDate(allReadings, "2026-01-01")
+class CatholicReadingsLoader(private val context: Context) {
+    
+    fun loadCatholicReadings(): List<DailyReading> {
+        return try {
+            val json = context.assets.open("catholic_readings_2026.json")
+                .bufferedReader()
+                .use { it.readText() }
+            
+            val gson = Gson()
+            val type = object : TypeToken<List<DailyReading>>() {}.type
+            gson.fromJson(json, type)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+    
+    fun getReadingForDate(date: String): DailyReading? {
+        val allReadings = loadCatholicReadings()
+        return allReadings.find { it.date == date }
+    }
+    
+    fun getTodayReading(): DailyReading? {
+        val today = java.time.LocalDate.now().toString() // Format: "2026-01-01"
+        return getReadingForDate(today)
+    }
+}
+```
+
+### Step 4: Usage Example
+
+```kotlin
+// In your Activity or Fragment:
+class ReadingsActivity : AppCompatActivity() {
+    
+    private lateinit var readingsLoader: CatholicReadingsLoader
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_readings)
+        
+        readingsLoader = CatholicReadingsLoader(this)
+        
+        // Load today's reading
+        val todayReading = readingsLoader.getTodayReading()
+        todayReading?.let { reading ->
+            displayReading(reading)
+        }
+    }
+    
+    private fun displayReading(reading: DailyReading) {
+        // Display the reading in your UI
+        findViewById<TextView>(R.id.dateTextView).text = reading.date
+        findViewById<TextView>(R.id.titleTextView).text = reading.title
+        
+        // Display each reading type
+        reading.readings.forEach { readingItem ->
+            // Add to RecyclerView or display in TextViews
+            Log.d("Reading", "${readingItem.type}: ${readingItem.text}")
+        }
+    }
+}
+```
+
+### Step 5: Query Specific Dates
+
+```kotlin
+// Get reading for a specific date
+val newYearReading = readingsLoader.getReadingForDate("2026-01-01")
+
+// Get reading for Christmas
+val christmasReading = readingsLoader.getReadingForDate("2026-12-25")
+
+// Display the title
+newYearReading?.let {
+    println("${it.date}: ${it.title}")
+    it.readings.forEach { reading ->
+        println("  ${reading.type}: ${reading.citation}")
+    }
+}
+```
+
+### Performance Tips
+
+**For better performance**, cache the loaded readings:
+
+```kotlin
+object CatholicReadingsCache {
+    private var cachedReadings: List<DailyReading>? = null
+    
+    fun getReadings(context: Context): List<DailyReading> {
+        if (cachedReadings == null) {
+            cachedReadings = CatholicReadingsLoader(context).loadCatholicReadings()
+        }
+        return cachedReadings ?: emptyList()
+    }
+}
 ```
 
 ## Maintenance and Updates
