@@ -9,7 +9,16 @@ API Source: Catholic Readings API (various sources)
 Output: catholic_readings_2026.json
 
 Usage:
-    python3 generate_catholic_readings.py
+    python3 generate_catholic_readings.py [year] [output_path]
+    
+    Arguments:
+        year (optional): Year for which to generate readings (default: 2026)
+        output_path (optional): Output JSON file path (default: GithubUsers/app/src/main/assets/catholic_readings_2026.json)
+    
+    Examples:
+        python3 generate_catholic_readings.py
+        python3 generate_catholic_readings.py 2027
+        python3 generate_catholic_readings.py 2027 readings_2027.json
 
 Requirements:
     - requests library (install with: pip install requests)
@@ -225,6 +234,8 @@ class CatholicReadingsGenerator:
 
 def main():
     """Main function to generate the Catholic readings JSON file."""
+    import sys
+    
     print("=" * 60)
     print("Catholic Daily Readings Generator")
     print("=" * 60)
@@ -248,12 +259,24 @@ def main():
     print("=" * 60)
     print()
     
+    # Parse command line arguments
+    year = 2026
+    output_path = "GithubUsers/app/src/main/assets/catholic_readings_2026.json"
+    
+    if len(sys.argv) > 1:
+        try:
+            year = int(sys.argv[1])
+        except ValueError:
+            print(f"Warning: Invalid year '{sys.argv[1]}', using default 2026")
+    
+    if len(sys.argv) > 2:
+        output_path = sys.argv[2]
+    
     # Generate readings
-    generator = CatholicReadingsGenerator(year=2026)
+    generator = CatholicReadingsGenerator(year=year)
     generator.generate_all_readings()
     
     # Save to assets folder (Android app location)
-    output_path = "GithubUsers/app/src/main/assets/catholic_readings_2026.json"
     generator.save_to_json(output_path)
     
     print()

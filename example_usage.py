@@ -9,8 +9,16 @@ import json
 from datetime import datetime
 
 
-def load_readings(json_path='GithubUsers/app/src/main/assets/catholic_readings_2026.json'):
-    """Load the readings from JSON file."""
+def load_readings(json_path=None):
+    """
+    Load the readings from JSON file.
+    
+    Args:
+        json_path: Path to JSON file. If None, uses default location.
+    """
+    if json_path is None:
+        json_path = 'GithubUsers/app/src/main/assets/catholic_readings_2026.json'
+    
     with open(json_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 

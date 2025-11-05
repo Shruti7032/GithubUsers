@@ -5,7 +5,14 @@ Validation script for Catholic Daily Readings JSON file.
 This script validates that the generated JSON file is complete and properly formatted.
 
 Usage:
-    python3 validate_readings.py
+    python3 validate_readings.py [json_path]
+    
+    Arguments:
+        json_path (optional): Path to JSON file to validate (default: GithubUsers/app/src/main/assets/catholic_readings_2026.json)
+    
+    Examples:
+        python3 validate_readings.py
+        python3 validate_readings.py readings_2027.json
 """
 
 import json
@@ -140,12 +147,17 @@ def validate_readings_content(data):
 
 def main():
     """Main validation function."""
+    import sys
+    
     print("=" * 70)
     print("Catholic Daily Readings JSON Validator")
     print("=" * 70)
     print()
     
+    # Allow custom path via command line argument
     json_path = 'GithubUsers/app/src/main/assets/catholic_readings_2026.json'
+    if len(sys.argv) > 1:
+        json_path = sys.argv[1]
     
     # Load JSON file
     print(f"Loading: {json_path}")
