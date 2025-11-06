@@ -83,3 +83,11 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Python cache
+__pycache__/
+*.pyc
