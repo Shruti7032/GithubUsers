@@ -13,7 +13,10 @@ Installation:
     pip install selenium webdriver-manager
 
 Usage:
-    python3 fetch_readings_selenium.py [output_path]
+    python3 fetch_readings_selenium.py [output_path] [--format=object|array]
+    
+    output_path: Path to save JSON file (default: catholic_readings_2026.json)
+    --format: Output format - 'object' for date-keyed or 'array' for list (default: array)
 """
 
 import json
@@ -217,8 +220,16 @@ class USCCBReadingsFetcher:
             ]
         }
     
-    def fetch_all_readings(self, start_date: date, end_date: date, output_path: str = None) -> List[Dict[str, Any]]:
-        """Fetch readings for all days in the date range, saving incrementally."""
+    def fetch_all_readings(self, start_date: date, end_date: date, output_path: str = None, format_type: str = 'array') -> List[Dict[str, Any]]:
+        """
+        Fetch readings for all days in the date range, saving incrementally.
+        
+        Args:
+            start_date: Start date
+            end_date: End date
+            output_path: Path to save JSON file
+            format_type: 'array' (default) or 'object' for date-keyed format
+        """
         total_days = (end_date - start_date).days + 1
         readings = []
         
@@ -231,6 +242,7 @@ class USCCBReadingsFetcher:
         print(f"Total days: {total_days}")
         if output_path:
             print(f"Saving incrementally to: {output_path}")
+            print(f"Output format: {format_type}")
         print()
         
         current_date = start_date
@@ -247,7 +259,7 @@ class USCCBReadingsFetcher:
             
             # Save incrementally after each date
             if output_path:
-                self.save_to_json(readings, output_path)
+                self.save_to_json(readings, output_path, format_type=format_type)
                 print(f"  ✓ Saved to {output_path} ({len(readings)} entries)")
             
             # Add delay between requests to be respectful
@@ -259,15 +271,47 @@ class USCCBReadingsFetcher:
         print(f"Completed! Fetched {len(readings)} daily readings.")
         return readings
     
-    def save_to_json(self, readings: List[Dict[str, Any]], output_path: str, show_details: bool = False) -> None:
-        """Save readings to JSON file."""
+    def save_to_json(self, readings: List[Dict[str, Any]], output_path: str, 
+                     show_details: bool = False, format_type: str = 'array') -> None:
+        """
+        Save readings to JSON file.
+        
+        Args:
+            readings: List of reading dictionaries
+            output_path: Path to save the file
+            show_details: Whether to print file details
+            format_type: 'array' (default) or 'object' (date-keyed)
+        """
+        # Convert to object format if requested
+        if format_type == 'object':
+            data = self._convert_to_object_format(readings)
+        else:
+            data = readings
+        
         with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(readings, f, indent=2, ensure_ascii=False)
+            json.dump(data, f, indent=2, ensure_ascii=False)
         
         if show_details:
             print(f"\nJSON file saved to: {output_path}")
-            file_size = len(json.dumps(readings))
+            file_size = len(json.dumps(data))
             print(f"File size: {file_size:,} bytes ({file_size/1024:.1f} KB)")
+            print(f"Format: {format_type}")
+    
+    def _convert_to_object_format(self, readings: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+        """
+        Convert array format to object format.
+        
+        Input:  [{"date": "2025-11-01", "title": "...", ...}, ...]
+        Output: {"2025-11-01": {"title": "...", ...}, ...}
+        """
+        result = {}
+        for reading in readings:
+            if 'date' in reading:
+                date_key = reading['date']
+                # Create new object without the date field
+                reading_obj = {k: v for k, v in reading.items() if k != 'date'}
+                result[date_key] = reading_obj
+        return result
 
 
 def main():
@@ -285,12 +329,25 @@ def main():
     print("=" * 70)
     print()
     
-    # Output path - default to current directory
+    # Parse command-line arguments
     output_path = "catholic_readings_2026.json"
-    if len(sys.argv) > 1:
-        output_path = sys.argv[1]
+    format_type = 'array'  # default to array format
+    
+    for arg in sys.argv[1:]:
+        if arg.startswith('--format='):
+            format_type = arg.split('=')[1].lower()
+            if format_type not in ['array', 'object']:
+                print(f"Error: Invalid format '{format_type}'. Must be 'array' or 'object'")
+                sys.exit(1)
+        elif not arg.startswith('--'):
+            output_path = arg
     
     print(f"Output file: {output_path}")
+    print(f"Output format: {format_type}")
+    if format_type == 'object':
+        print("  (Date-keyed object for direct lookup)")
+    else:
+        print("  (Array of reading objects)")
     print(f"Note: File will be saved incrementally after each date is fetched.")
     print()
     
@@ -300,10 +357,10 @@ def main():
     
     # Fetch readings with incremental saving
     fetcher = USCCBReadingsFetcher()
-    readings = fetcher.fetch_all_readings(start_date, end_date, output_path)
+    readings = fetcher.fetch_all_readings(start_date, end_date, output_path, format_type)
     
     # Final save with details
-    fetcher.save_to_json(readings, output_path, show_details=True)
+    fetcher.save_to_json(readings, output_path, show_details=True, format_type=format_type)
     
     # Summary
     actual_readings = sum(1 for r in readings 

@@ -37,7 +37,9 @@ This solution provides:
 
 **Location**: `GithubUsers/app/src/main/assets/catholic_readings_2026.json`
 
-**Format**:
+**Formats Available**:
+
+1. **Array Format** (default) - List of reading objects:
 ```json
 [
   {
@@ -64,6 +66,30 @@ This solution provides:
   ...
 ]
 ```
+
+2. **Object Format** - Date-keyed object for direct lookup:
+```json
+{
+  "2026-01-01": {
+    "title": "Solemnity of Mary, Mother of God",
+    "readings": [
+      {
+        "type": "First Reading",
+        "citation": "Numbers 6:22-27",
+        "text": "..."
+      },
+      ...
+    ]
+  },
+  "2026-01-02": {
+    "title": "...",
+    "readings": [...]
+  },
+  ...
+}
+```
+
+**Converting between formats**: Use the `convert_readings_format.py` script (see [Format Conversion](#format-conversion) below).
 
 ## Requirements
 
@@ -104,7 +130,15 @@ This fetches actual readings from MIT-licensed open-source APIs:
 
 ```bash
 pip install selenium webdriver-manager
-python3 fetch_readings_selenium.py [optional_output_path]
+
+# Generate array format (default)
+python3 fetch_readings_selenium.py
+
+# Generate object format (date-keyed for direct lookup)
+python3 fetch_readings_selenium.py --format=object
+
+# Specify custom output path
+python3 fetch_readings_selenium.py my_readings.json --format=object
 ```
 
 This uses Selenium (Python's browser automation tool) to fetch directly from USCCB:
@@ -114,6 +148,7 @@ This uses Selenium (Python's browser automation tool) to fetch directly from USC
 - Fetches actual published readings when available
 - **Saves incrementally after each date** - JSON file is updated after every reading is fetched
 - Default output: `catholic_readings_2026.json` in the same directory as the script
+- **Supports both array and object formats**
 
 **Best for**: Getting real-time data directly from USCCB website.
 
@@ -122,6 +157,7 @@ This uses Selenium (Python's browser automation tool) to fetch directly from USC
 - ✅ Real-time progress updates
 - ✅ Automatic ChromeDriver management
 - ✅ Rate limiting (2 second delay between requests)
+- ✅ **Object format option for direct date lookup** (use `--format=object`)
 
 **Note**: Requires Chrome/Chromium browser installed. The script respects USCCB's website with rate limiting.
 
@@ -314,9 +350,30 @@ python3 -m json.tool GithubUsers/app/src/main/assets/catholic_readings_2026.json
 python3 -c "import json; data=json.load(open('GithubUsers/app/src/main/assets/catholic_readings_2026.json')); print(f'Total days: {len(data)}')"
 ```
 
+## Format Conversion
+
+If you need to convert between array and object formats, use the conversion script:
+
+```bash
+# Convert array to object format (for direct date lookup)
+python3 convert_readings_format.py readings_array.json readings_object.json object
+
+# Convert object to array format
+python3 convert_readings_format.py readings_object.json readings_array.json array
+
+# Auto-detect format and convert to object
+python3 convert_readings_format.py input.json output.json object
+```
+
+**When to use each format:**
+- **Array format**: Default for most cases, easy to iterate, compatible with list views
+- **Object format**: Best for direct date lookup without iteration, faster access by date
+
 ## Using in Android App
 
-### Step 1: Add Gson Dependency
+### For Array Format (Default)
+
+#### Step 1: Add Gson Dependency
 
 Add to your `build.gradle` (app level):
 ```gradle
@@ -412,6 +469,70 @@ class ReadingsActivity : AppCompatActivity() {
     }
 }
 ```
+
+### For Object Format (Date-Keyed)
+
+If you generated the JSON with `--format=object`, use this approach for faster date lookups:
+
+#### Step 2B: Data Classes (Adjusted)
+
+```kotlin
+// No date field needed in DailyReading for object format
+data class DailyReading(
+    val title: String,
+    val lectionary: String?,  // Optional field
+    val readings: List<Reading>
+)
+
+data class Reading(
+    val type: String,
+    val citation: String,
+    val text: String
+)
+```
+
+#### Step 3B: Load Object Format JSON
+
+```kotlin
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.IOException
+
+class CatholicReadingsLoaderObject(private val context: Context) {
+    
+    fun loadCatholicReadings(): Map<String, DailyReading> {
+        return try {
+            val json = context.assets.open("catholic_readings_2026.json")
+                .bufferedReader()
+                .use { it.readText() }
+            
+            val gson = Gson()
+            val type = object : TypeToken<Map<String, DailyReading>>() {}.type
+            gson.fromJson(json, type)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emptyMap()
+        }
+    }
+    
+    // Direct date lookup - much faster than searching through array!
+    fun getReadingForDate(date: String): DailyReading? {
+        val allReadings = loadCatholicReadings()
+        return allReadings[date]  // O(1) lookup instead of O(n) search
+    }
+    
+    fun getTodayReading(): DailyReading? {
+        val today = java.time.LocalDate.now().toString() // Format: "2026-01-01"
+        return getReadingForDate(today)
+    }
+}
+```
+
+**Advantages of Object Format:**
+- ✅ **Faster lookups**: Direct `map[date]` access instead of searching through array
+- ✅ **Simpler code**: No need to iterate to find specific date
+- ✅ **Better performance**: O(1) vs O(n) complexity for date lookups
 
 ### Step 5: Query Specific Dates
 
