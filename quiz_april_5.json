@@ -1,0 +1,55 @@
+{
+  "date": "April 5",
+  "questions": [
+    {
+      "question": "Who was preaching to the people in the first reading?",
+      "options": [
+        "Jesus",
+        "Peter",
+        "James",
+        "John"
+      ],
+      "answer": "Peter"
+    },
+    {
+      "question": "In the second reading, what are we told to seek?",
+      "options": [
+        "Treasure on earth",
+        "Fame and fortune",
+        "What is above",
+        "Missing items"
+      ],
+      "answer": "What is above"
+    },
+    {
+      "question": "Who told Peter and the other disciple that Jesus was not in the tomb?",
+      "options": [
+        "John the Baptist",
+        "Mary Magdalene",
+        "Andrew",
+        "The Pharisees"
+      ],
+      "answer": "Mary Magdalene"
+    },
+    {
+      "question": "What did Peter and the other disciple do when they learned that Jesus was not in the tomb?",
+      "options": [
+        "Ran to the tomb",
+        "Went fishing",
+        "Cried",
+        "Hid from the Romans"
+      ],
+      "answer": "Ran to the tomb"
+    },
+    {
+      "question": "What did the other disciple do when he saw the empty tomb?",
+      "options": [
+        "Shouted",
+        "Cried",
+        "Fainted",
+        "Believed"
+      ],
+      "answer": "Believed"
+    }
+  ]
+}
