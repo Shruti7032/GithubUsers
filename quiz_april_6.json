@@ -1,0 +1,55 @@
+{
+  "date": "April 6",
+  "questions": [
+    {
+      "question": "Who preached to the people on Pentecost?",
+      "options": [
+        "Jesus",
+        "Peter",
+        "John",
+        "Mary Magdalene"
+      ],
+      "answer": "Peter"
+    },
+    {
+      "question": "Whom did God send, as He had promised, on Pentecost?",
+      "options": [
+        "Jesus",
+        "David",
+        "Peter",
+        "The Holy Spirit"
+      ],
+      "answer": "The Holy Spirit"
+    },
+    {
+      "question": "Jesus told the women leaving the tomb not to be ___________.",
+      "options": [
+        "Afraid",
+        "Quiet",
+        "Angry",
+        "Silly"
+      ],
+      "answer": "Afraid"
+    },
+    {
+      "question": "What did the Jewish priests tell the soldiers to do?",
+      "options": [
+        "Attack",
+        "Lie",
+        "Go to sleep",
+        "Run away"
+      ],
+      "answer": "Lie"
+    },
+    {
+      "question": "What did the soldiers say happened to Jesus's body?",
+      "options": [
+        "They buried it",
+        "He rose from the dead",
+        "The Jewish priests lost it",
+        "The disciples stole it"
+      ],
+      "answer": "The disciples stole it"
+    }
+  ]
+}
